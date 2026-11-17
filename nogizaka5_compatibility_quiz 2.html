@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#39245f">
+<title>乃木坂46 5期生 相性診断</title>
+<style>
+:root{--purple:#39245f;--deep:#211536;--lav:#eee7fa;--pink:#f6e8f0;--ink:#282332;--muted:#716b7b;--gold:#c6a45b}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#f7f3fb,#f9f5f4);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;color:var(--ink)}
+.wrap{max-width:760px;margin:auto;padding:22px 16px 50px}.hero{background:linear-gradient(135deg,#241638,#55357a);color:#fff;border-radius:24px;padding:28px 24px;text-align:center;box-shadow:0 12px 32px #291b3b22}
+.kicker{font-size:12px;letter-spacing:.18em;color:#e2d3f4}.hero h1{font-size:clamp(27px,6vw,42px);line-height:1.25;margin:12px 0 8px}.hero p{margin:0;color:#e9e0f2;font-size:14px}
+.pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}.pill{border:1px solid #ffffff55;border-radius:99px;padding:6px 11px;font-size:12px}
+.panel{background:#fff;border:1px solid #ece6f1;border-radius:20px;padding:22px;margin-top:16px;box-shadow:0 6px 22px #34244a0a}
+h2{font-size:19px;margin:0 0 8px;color:var(--purple)}.sub{font-size:13px;color:var(--muted);line-height:1.7}
+.btn{border:0;border-radius:13px;background:var(--purple);color:#fff;padding:14px 20px;font-weight:700;font-size:15px;cursor:pointer;width:100%;margin-top:16px}.btn.secondary{background:#eee8f5;color:var(--purple)}.btn:disabled{opacity:.4;cursor:not-allowed}
+.progress{height:8px;background:#eee9f2;border-radius:99px;overflow:hidden;margin:15px 0 6px}.bar{height:100%;width:0;background:linear-gradient(90deg,#8060a9,#c19acb);transition:width .2s}
+.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.qtitle{font-size:20px;font-weight:750;line-height:1.5;margin:14px 0 18px}.choices{display:grid;gap:10px}.choice{display:flex;align-items:center;gap:11px;border:1.5px solid #e8e1ed;border-radius:14px;padding:13px 14px;cursor:pointer;transition:.15s;background:#fff}.choice:hover{border-color:#b9a4ce;background:#fcfaff}.choice.selected{border-color:#6e4a92;background:#f5effa}.dot{width:18px;height:18px;border:1.5px solid #b7adbf;border-radius:50%;flex:none}.selected .dot{border:5px solid #68458c}.choice span:last-child{font-size:14px;line-height:1.45}
+.rangeRow{display:flex;align-items:center;gap:12px;margin-top:16px}.rangeRow input{width:100%;accent-color:#67458b}.rangeLabel{font-size:12px;color:var(--muted);white-space:nowrap}.rangeValue{font-weight:800;color:var(--purple);min-width:56px;text-align:right}
+.resultTop{text-align:center;background:linear-gradient(140deg,#28183c,#67488a);color:white;border-radius:20px;padding:24px 18px}.rankNo{font-size:13px;letter-spacing:.2em;color:#e5d4f5}.winner{font-size:32px;font-weight:850;margin:8px 0}.score{font-size:14px;color:#eee4f7}.reason{background:#f6f1fa;border-radius:14px;padding:15px;line-height:1.8;font-size:14px;margin-top:14px}
+.ranklist{display:grid;gap:9px;margin-top:14px}.rank{display:grid;grid-template-columns:36px 1fr 74px;align-items:center;gap:10px;border:1px solid #eee8f2;border-radius:13px;padding:11px 12px}.rank.first{border-color:#c7a85f;background:#fffcf3}.num{font-weight:800;color:#80629b;text-align:center}.rankname{font-weight:700;font-size:14px}.meter{height:6px;background:#eee9f2;border-radius:9px;margin-top:6px;overflow:hidden}.meter i{display:block;height:100%;background:#9474b3;border-radius:9px}.pts{text-align:right;font-weight:800;color:var(--purple);font-size:14px}
+.note{font-size:11px;color:#81798a;line-height:1.7;margin-top:16px}.hide{display:none!important}.tag{display:inline-block;background:#f0e9f7;color:#60417f;border-radius:99px;padding:5px 9px;font-size:11px;margin:3px}
+footer{text-align:center;color:#8a8291;font-size:11px;margin-top:24px}
+@media(min-width:600px){.panel{padding:26px}.choices{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+ <div class="kicker">NOGIZAKA46 · 5TH GENERATION</div>
+ <h1>あなたと相性がよさそうな<br>5期生メンバーは？</h1>
+ <p>性格・価値観・好みから、11人との相性を診断！</p>
+ <div class="pills"><span class="pill">全23問</span><span class="pill">約3〜5分</span><span class="pill">ランキング発表</span></div>
+</header>
+<section id="start" class="panel">
+ <h2>診断をはじめよう</h2>
+ <p class="sub">直感で選んでOK！正解・不正解はありません。あなたの好みや理想の関係性に近いものを選んでね。</p>
+ <div style="margin-top:18px;font-weight:700;font-size:14px">内面と外見、どちらを重視する？</div>
+ <div class="rangeRow"><span class="rangeLabel">内面重視</span><input id="weight" type="range" min="0" max="100" value="50"><span class="rangeValue" id="weightVal">50 : 50</span><span class="rangeLabel">外見重視</span></div>
+ <p class="note">スライダーは内面・外見の配点です。あとから変更もできます。</p>
+ <button class="btn" id="begin">診断スタート</button>
+</section>
+<section id="quiz" class="panel hide">
+ <div class="meta"><span id="sectionName">性格・価値観</span><span id="count">1 / 23</span></div>
+ <div class="progress"><div class="bar" id="bar"></div></div>
+ <div class="qtitle" id="question"></div>
+ <div class="choices" id="choices"></div>
+ <button class="btn" id="next" disabled>次へ</button>
+ <button class="btn secondary" id="back">前の質問に戻る</button>
+</section>
+<section id="result" class="hide">
+ <div class="resultTop">
+  <div class="rankNo">YOUR BEST MATCH</div>
+  <div class="winner" id="winner"></div>
+  <div class="score" id="winnerScore"></div>
+  <div id="winnerTags" style="margin-top:12px"></div>
+ </div>
+ <div class="panel">
+  <h2>あなたとの相性ポイント</h2>
+  <div id="reason" class="reason"></div>
+  <p class="note">診断は回答内容と、メンバーの公開情報・活動から受ける印象をもとにした独自の娯楽コンテンツです。本人の実際の性格や相性を断定するものではありません。</p>
+ </div>
+ <div class="panel">
+  <h2>相性ランキング</h2>
+  <p class="sub">あなたの回答をもとにした11人のランキングです。</p>
+  <div class="ranklist" id="ranking"></div>
+ </div>
+ <div class="panel">
+  <h2>もう一度診断する？</h2>
+  <p class="sub">回答や重視度を変えると、ランキングも変わります。</p>
+  <button class="btn" id="share">結果画像を作成・共有</button>
+  <button class="btn secondary" id="restart">最初からやり直す</button>
+  <p class="note">共有機能は端末・ブラウザによって対応状況が異なります。対応していない場合は画像を保存できます。</p>
+ </div>
+</section>
+<footer>乃木坂46 5期生 相性診断｜ファン向け非公式コンテンツ</footer>
+</div>
+<script>
+const members=[
+{name:"五百城茉央",tags:["穏やか","自然体","思いやり","親しみやすい","マイペース"],inner:["calm","kind","authentic","close","creative","trust","relaxed","soft"],outer:["cute","soft","approachable","longhair"]},
+{name:"池田瑛紗",tags:["自分らしさ","表現力","クリエイティブ"],inner:["authentic","expressive","creative","hardwork","trust","dialogue"],outer:["longhair","girly","shy"]},
+{name:"一ノ瀬美空",tags:["明るさ","親しみやすさ","会話上手"],inner:["playful","cheer","close","expressive","laughter","kind"],outer:["cute","bright","approachable","girly"]},
+{name:"井上和",tags:["芯の強さ","努力家","表現力"],inner:["authentic","hardwork","expressive","creative","dialogue","trust"],outer:["bright","longhair","girly"]},
+{name:"岡本姫奈",tags:["明るさ","行動力","親しみやすさ"],inner:["playful","cheer","spontaneous","close","laughter","expressive"],outer:["cute","bright","approachable"]},
+{name:"小川彩",tags:["柔らかさ","素直さ","癒やし"],inner:["calm","kind","soft","authentic","close","trust","relaxed"],outer:["cute","soft","bright","approachable"]},
+{name:"奥田いろは",tags:["落ち着き","表現力","努力家"],inner:["calm","kind","hardwork","creative","authentic","dialogue","trust"],outer:["soft","longhair","girly"]},
+{name:"川﨑桜",tags:["柔らかい雰囲気","可愛らしさ","自然体"],inner:["calm","soft","relaxed","kind","close","authentic","trust"],outer:["cute","shy","bright","longhair","girly","soft","approachable"]},
+{name:"菅原咲月",tags:["明るさ","気配り","会話の楽しさ"],inner:["playful","cheer","kind","close","expressive","dialogue","laughter"],outer:["cute","bright","approachable","girly"]},
+{name:"冨里奈央",tags:["柔らかさ","親しみやすさ","マイペース"],inner:["calm","soft","kind","relaxed","close","authentic","trust"],outer:["cute","shy","soft","approachable","longhair"]},
+{name:"中西アルノ",tags:["自分らしさ","独自の感性","表現力"],inner:["authentic","expressive","creative","hardwork","dialogue","trust"],outer:["longhair","shy"]}
+];
+const qs=[
+["休日の過ごし方は？",[["予定を決めず気分で動く",["spontaneous","relaxed"]],["ゆっくり落ち着いて過ごす",["calm","soft"]],["友達と出かけて楽しむ",["playful","close"]],["趣味や好きなことに集中する",["creative","hardwork"]]]],
+["惹かれる雰囲気は？",[["穏やかで優しい",["calm","kind"]],["明るく元気",["cheer","playful"]],["自分の世界を持っている",["authentic","creative"]],["努力家で真面目",["hardwork","trust"]]]],
+["理想の会話は？",[["ずっと冗談を言い合える",["playful","laughter"]],["ゆっくり深い話ができる",["dialogue","trust"]],["何気ない日常の話をする",["close","soft"]],["好きな趣味の話で盛り上がる",["creative","expressive"]]]],
+["落ち込んだとき、どうしてほしい？",[["明るく励ましてほしい",["cheer","kind"]],["静かにそばにいてほしい",["calm","soft"]],["話をじっくり聞いてほしい",["dialogue","trust"]],["気分転換に誘ってほしい",["playful","close"]]]],
+["人間関係で一番大切なのは？",[["思いやり・優しさ",["kind","soft"]],["一緒に笑えること",["laughter","playful"]],["お互いを信頼できること",["trust","authentic"]],["何でも話し合えること",["dialogue","expressive"]]]],
+["憧れる生き方は？",[["自分らしさを大切にする",["authentic","creative"]],["周りを明るくする",["cheer","kind"]],["目標に向かって努力する",["hardwork","trust"]],["自然体で無理なく過ごす",["relaxed","calm"]]]],
+["理想の距離感は？",[["よく一緒に時間を過ごしたい",["close","playful"]],["お互いの時間も大切にしたい",["relaxed","authentic"]],["必要なときに支え合いたい",["trust","kind"]],["趣味を一緒に楽しみたい",["creative","close"]]]],
+["話し方の好みは？",[["感情表現が豊かで素直",["expressive","authentic"]],["落ち着いていて穏やか",["calm","soft"]],["明るくテンポがいい",["playful","cheer"]],["言葉を選んで丁寧に話す",["kind","dialogue"]]]],
+["意見が違ったときは？",[["きちんと話し合いたい",["dialogue","trust"]],["相手の考えをまず受け止める",["kind","soft"]],["少し時間を置いて考える",["calm","relaxed"]],["明るく切り替えていきたい",["cheer","playful"]]]],
+["グループにいると惹かれるタイプは？",[["静かに努力する職人気質",["hardwork","authentic"]],["場を盛り上げるムードメーカー",["cheer","playful"]],["みんなを気遣う聞き上手",["kind","dialogue"]],["独自の感性を持つ表現者",["creative","expressive"]]]],
+["一緒に楽しみたいことは？",[["音楽・映画・アート",["creative","expressive"]],["おしゃべりやお出かけ",["playful","close"]],["のんびり過ごすこと",["calm","relaxed"]],["新しいことへの挑戦",["hardwork","spontaneous"]]]],
+["理想の関係性は？",[["何でもないことで笑い合える",["laughter","close"]],["お互いを深く理解し合える",["trust","dialogue"]],["自然体で気を使いすぎない",["authentic","relaxed"]],["一緒に成長していける",["hardwork","kind"]]]],
+["顔立ちの雰囲気で好みなのは？",[["かわいらしく愛嬌がある",["cute","approachable"]],["大人っぽく綺麗",["girly","longhair"]],["透明感のある柔らかさ",["soft","shy"]],["明るく華やか",["bright","approachable"]]]],
+["表情で惹かれるのは？",[["少し照れた表情",["shy"]],["満面の笑顔",["bright","approachable"]],["自然体の穏やかな表情",["soft","calm"]],["凛とした真剣な表情",["girly","bright"]]]],
+["目元の好みは？",[["大きくて明るい目",["bright"]],["優しく柔らかな目",["soft"]],["印象的で個性的な目",["shy"]],["すっきりした目元",["girly"]]]],
+["髪型の好みは？",[["ロングヘア",["longhair"]],["ミディアム",["soft"]],["ショート・ボブ",["cute","bright"]],["髪型にはこだわらない",["approachable"]]]],
+["ファッションの好みは？",[["ガーリー・かわいい系",["girly","cute"]],["シンプル・ナチュラル",["soft","approachable"]],["カジュアル・元気系",["bright","cute"]],["個性的・おしゃれ系",["shy","longhair"]]]],
+["全体の雰囲気で惹かれるのは？",[["ふんわり癒やし系",["soft","calm"]],["明るく親しみやすい",["approachable","bright"]],["上品で落ち着いた",["girly","soft"]],["不思議な魅力がある",["shy","longhair"]]]],
+["アイドルとして特に惹かれる魅力は？",[["親しみやすいかわいらしさ",["approachable","cute"]],["パフォーマンスの表現力",["bright","girly"]],["自然体で飾らないところ",["soft","approachable"]],["独自の世界観",["shy","longhair"]]]],
+["第一印象ではどちらを重視する？",[["外見・雰囲気",["cute","soft"]],["内面・考え方",["kind","trust"]],["どちらも同じくらい",["approachable","authentic"]],["話したときの空気感",["close","dialogue"]]]],
+["一緒にいるならどんな人がいい？",[["少しマイペースでふんわりした人",["relaxed","soft"]],["明るく行動的な人",["cheer","spontaneous"]],["落ち着いていて安心できる人",["calm","trust"]],["好奇心旺盛で楽しい人",["creative","playful"]]]],
+["関係性で特に大切にしたいのは？",[["お互いを理解し合うこと",["dialogue","trust"]],["一緒に笑って過ごすこと",["laughter","close"]],["相手を尊重し合うこと",["kind","authentic"]],["無理せず自然体でいられること",["relaxed","soft"]]]],
+["見た目の第一印象で気になるメンバーは？",[...members.map(m=>[m.name,["favorite:"+m.name]])]]
+];
+let answers=Array(qs.length).fill(null),idx=0,lastResult=[];
+const $=id=>document.getElementById(id);
+$("weight").addEventListener("input",()=>{$("weightVal").textContent=(100-+$("weight").value)+" : "+$("weight").value});
+$("begin").onclick=()=>{$("start").classList.add("hide");$("quiz").classList.remove("hide");render()};
+function render(){
+ const q=qs[idx];$("sectionName").textContent=idx<12?"性格・価値観":idx<20?"外見・雰囲気":"最終調整";
+ $("count").textContent=(idx+1)+" / "+qs.length;$("bar").style.width=((idx+1)/qs.length*100)+"%";$("question").textContent=q[0];
+ $("choices").innerHTML="";
+ q[1].forEach((o,i)=>{let d=document.createElement("div");d.className="choice"+(answers[idx]===i?" selected":"");d.innerHTML='<span class="dot"></span><span></span>';d.children[1].textContent=o[0];d.onclick=()=>{answers[idx]=i;renderChoices()};$("choices").appendChild(d)});
+ $("next").textContent=idx===qs.length-1?"結果を見る":"次へ";$("next").disabled=answers[idx]===null;$("back").style.display=idx===0?"none":"block";
+}
+function renderChoices(){[...$("choices").children].forEach((d,i)=>d.classList.toggle("selected",answers[idx]===i));$("next").disabled=answers[idx]===null}
+$("next").onclick=()=>{if(answers[idx]===null)return;if(idx<qs.length-1){idx++;render()}else showResult()};
+$("back").onclick=()=>{if(idx>0){idx--;render()}};
+function showResult(){
+ let innerW=(100-+$("weight").value)/100,outerW=(+$("weight").value)/100;
+ let scores=members.map(m=>{let inn=0,out=0;
+ qs.forEach((q,i)=>{let tags=q[1][answers[i]][1];if(i<12){inn+=tags.filter(t=>m.inner.includes(t)).length/2}else if(i<20){out+=tags.filter(t=>m.outer.includes(t)).length/2}else if(i===20||i===21){inn+=tags.filter(t=>m.inner.includes(t)).length/2}else{if(tags[0]==="favorite:"+m.name)out+=5}});
+ let maxInner=12*1, maxOuter=8*1+5;
+ let normalized=(inn/maxInner*100)*innerW+(out/maxOuter*100)*outerW;
+ return {...m,score:Math.round(Math.min(99,Math.max(60,normalized+58)))}});
+ scores.sort((a,b)=>b.score-a.score);lastResult=scores;
+ $("winner").textContent=scores[0].name;$("winnerScore").textContent="相性スコア "+scores[0].score+" / 100";
+ $("winnerTags").innerHTML=scores[0].tags.map(t=>'<span class="tag">'+t+'</span>').join("");
+ let top=scores[0],chosen=answers.map((a,i)=>qs[i][1][a][0]).slice(0,12);
+ $("reason").textContent="あなたは「"+chosen.slice(0,3).join("・")+"」などを大切にする傾向。"+top.name+"は今回の診断で、あなたが選んだ「"+(top.tags[0])+"」や「"+(top.tags[1])+"」といった雰囲気との重なりが多く、相性上位になりました。特に、穏やかさや自然体でいられる関係を重視する回答が反映されています。";
+ $("ranking").innerHTML=scores.map((m,i)=>'<div class="rank '+(i===0?"first":"")+'"><div class="num">'+(i+1)+'</div><div><div class="rankname">'+m.name+'</div><div class="meter"><i style="width:'+m.score+'%"></i></div></div><div class="pts">'+m.score+'点</div></div>').join("");
+ $("quiz").classList.add("hide");$("result").classList.remove("hide");window.scrollTo({top:0,behavior:"smooth"});
+}
+$("restart").onclick=()=>{answers=Array(qs.length).fill(null);idx=0;$("result").classList.add("hide");$("start").classList.remove("hide");window.scrollTo({top:0,behavior:"smooth"})};
+$("share").onclick=async()=>{
+ const c=document.createElement("canvas");c.width=1080;c.height=1350;const x=c.getContext("2d");
+ const g=x.createLinearGradient(0,0,1080,1350);g.addColorStop(0,"#261638");g.addColorStop(1,"#654783");x.fillStyle=g;x.fillRect(0,0,1080,1350);
+ x.fillStyle="#e9d9f4";x.textAlign="center";x.font="28px sans-serif";x.fillText("NOGIZAKA46 5TH GENERATION",540,110);
+ x.fillStyle="#fff";x.font="bold 56px sans-serif";x.fillText("あなたの相性診断結果",540,220);
+ x.font="32px sans-serif";x.fillStyle="#e9d9f4";x.fillText("BEST MATCH",540,360);
+ x.font="bold 76px sans-serif";x.fillStyle="#fff";x.fillText(lastResult[0].name,540,475);
+ x.font="bold 40px sans-serif";x.fillStyle="#f3d99b";x.fillText(lastResult[0].score+" / 100",540,545);
+ x.fillStyle="#fff";x.font="bold 34px sans-serif";x.fillText("相性ランキング TOP 5",540,680);
+ lastResult.slice(0,5).forEach((m,i)=>{x.textAlign="left";x.font="32px sans-serif";x.fillStyle="#fff";x.fillText((i+1)+". "+m.name,240,770+i*78);x.textAlign="right";x.fillStyle="#f3d99b";x.fillText(m.score+"点",840,770+i*78)});
+ x.textAlign="center";x.fillStyle="#e9d9f4";x.font="22px sans-serif";x.fillText("ファン向け非公式・娯楽診断",540,1240);
+ const blob=await new Promise(r=>c.toBlob(r,"image/png"));const file=new File([blob],"nogizaka5_match_result.png",{type:"image/png"});
+ if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:"乃木坂46 5期生 相性診断"});return}catch(e){}}
+ const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="nogizaka5_match_result.png";a.click();URL.revokeObjectURL(url);
+};
+</script>
+</body></html>
